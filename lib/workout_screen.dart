@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -7,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:untitled/cooldown_workout_start.dart';
 import 'package:untitled/main.dart';
+import 'progress.dart';
 
 class workout extends StatefulWidget {
   var day_workout;
@@ -18,14 +18,12 @@ class workout extends StatefulWidget {
   }
 }
 
-swap(var l) {}
 
 class workout_screen extends State<StatefulWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    setState(() {});
+    setState((){});
   }
 
   var opacity_main = 1.0;
@@ -79,7 +77,7 @@ class workout_screen extends State<StatefulWidget> {
                                   Container(
                                       margin: EdgeInsets.all(4),
                                       child: Text(
-                                        "${data.weekdays[day_workout].name}'s Workout (${data.weekdays[day_workout].name})",
+                                        "${data.weekdays[day_workout].name}'s Workout",
                                         style: TextStyle(
                                             fontSize: 27,
                                             fontWeight: FontWeight.w500),
@@ -163,7 +161,7 @@ class workout_screen extends State<StatefulWidget> {
                                           margin: EdgeInsets.only(right: 30),
                                           child: ElevatedButton(
                                               onPressed: () {
-                                                print("Stats Opened");
+                                                Navigator.push(context, MaterialPageRoute(builder: (context)=>progress(data,day_workout,index)));
                                               },
                                               child: Text("Open Stats")),
                                         )
@@ -239,8 +237,8 @@ class workout_screen extends State<StatefulWidget> {
                                     exercise_info(
                                         get_new_exercise_controller.text
                                             .toString(),
-                                        [Sets(15, 15)],
-                                        1));
+                                        [],
+                                        0));
                                 for (int i = 0;
                                     i <
                                         data.weekdays[day_workout].exercises

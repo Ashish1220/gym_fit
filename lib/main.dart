@@ -1,15 +1,18 @@
 import 'dart:io';
 import 'dart:math';
-
+import 'connect_to_database.dart';
+import 'progress.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:untitled/progress.dart';
 import 'package:untitled/rest.dart';
 import 'workout_screen.dart';
 import 'start_workout.dart';
 import 'cooldown_workout_start.dart';
+import 'add_new_routine.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,14 +24,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'GYM FIT',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      // home: rest(),
     );
   }
 }
@@ -54,7 +56,7 @@ class exercise_info {
   var max_value_of_exersice = 0;
   var max_value_of_reps = 0;
   var last_time_sets = 2;
-  exercise_info(this.name, var set_instance,this.last_time_sets) {
+  exercise_info(this.name, var set_instance, this.last_time_sets) {
     this.Sets = set_instance;
 
     for (var i = 0; i < Sets.length; i++) {
@@ -86,33 +88,15 @@ class Weekdays {
   var name;
   var stratergy_name;
   var exercises;
-  var workout_time = 0;
+  var workout_time=0;
   Weekdays(this.name, this.stratergy_name, this.exercises, this.workout_time);
 }
 
 class data {
-  var total_estimated_time = 0;
-  var weekdays = [
-    Weekdays(
-        "Monday",
-        "MIX",
-        [
-          exercise_info("Bench-Press", [Sets(16, 50), Sets(8, 200)],2),
-          exercise_info("Shoulder-press", [Sets(16, 50), Sets(8, 102)],2),
-          exercise_info("Lats PullDown", [Sets(12, 54), Sets(6, 120)],2)
-
-        ],
-        3)
-  ];
-  var workout_routines = [
-    "STRENGTH",
-    "STAMINA",
-    "ENDURANCE",
-    "BOXING",
-    "TIMEPASS"
-  ];
-
-  data() {
+  var total_estimated_time ;
+  var weekdays ;
+  var workout_routines ;
+  data(this.weekdays,this.workout_routines) {
     for (int i = 0; i < weekdays.length; i++) {
       total_estimated_time += weekdays[i].workout_time;
     }
@@ -120,11 +104,35 @@ class data {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  var app_data = data();
+  var app_data = data([
+    Weekdays(
+        "Monday",
+        "MIX",
+        [
+          exercise_info("Bench-Press", [Sets(16, 50), Sets(8, 200)], 2),
+          exercise_info("Shoulder-press", [Sets(16, 50), Sets(8, 102)], 2),
+          exercise_info("Lats PullDown", [Sets(12, 54), Sets(6, 120)], 2)
+        ],
+        3)
+  ],[
+    "STRENGTH",
+    "STAMINA",
+    "ENDURANCE",
+    "BOXING",
+    "TIMEPASS"
+  ]
+  );
+  var new_routine_visible = false;
+
+  get_new_routine() async {
+    await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => add_new_routine(app_data)));
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Container(
@@ -140,152 +148,188 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 2,
-            child: Row(
-              children: [
-                InkWell(
-                  onTap: () {
-                    print("Clicked On Add new");
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    width: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.grey,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(12),
+      body: Stack(children: [
+        Column(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Row(
+                children: [
+                  InkWell(
+                    onTap: () {},
+                    child: Container(
+                      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                      width: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.grey,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          bottomRight: Radius.circular(12),
+                        ),
                       ),
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.add,
-                        size: 70,
-                        color: Colors.black45,
+                      child: Center(
+                        child: Icon(
+                          Icons.add,
+                          size: 70,
+                          color: Colors.black45,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 10,
-                  child: ListView.builder(
-                      itemCount: app_data.workout_routines.length,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            print("Clicked On routines");
-                          },
-                          child: Container(
-                            margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
-                            width: 180,
-                            decoration: BoxDecoration(
-                              color: Colors.orange,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                bottomRight: Radius.circular(12),
+                  Expanded(
+                    flex: 10,
+                    child: ListView.builder(
+                        itemCount: app_data.workout_routines.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              print("Clicked On routines");
+                            },
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+                              width: 180,
+                              decoration: BoxDecoration(
+                                color: Colors.orange,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(12),
+                                  bottomRight: Radius.circular(12),
+                                ),
                               ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "${app_data.workout_routines[index]}",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
+                              child: Center(
+                                child: Text(
+                                  "${app_data.workout_routines[index]}",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      }),
-                ),
-              ],
+                          );
+                        }),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Expanded(
+                flex: 1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          print("Workout started");
+                          setState(() {
+
+                            get_new_routine();
+                          });
+                        },
+                        child: Text(
+                          "Add a new workout",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStateProperty.all<Color>(Colors.green))),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Total routine-time: "),
+                        Text("${app_data.total_estimated_time} Hours"),
+                      ],
+                    )
+                  ],
+                )),
+            Expanded(
+              flex: 6,
+              child: ListView.builder(
+                itemCount: app_data.weekdays.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      print("CLICKED ON WORKOUT");
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => workout(index, app_data)));
+                    },
+                    child: Container(
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(9),
+                        border: Border.all(width: 0.5),
+                      ),
+                      margin: const EdgeInsets.symmetric(vertical: 2),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: Container(
+                              margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                              child: Column(
+                                children: [
+                                  Text(
+                                    "${index + 1}.${app_data.weekdays[index].name} 's workout",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  Text(
+                                      "${app_data.weekdays[index].stratergy_name}"),
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Center(
+                              child: Container(
+                                margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
+                                child: Text(
+                                    "Average Time: \n${app_data.weekdays[index].workout_time} Hrs"),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                              child: Container(
+                            child: IconButton(
+                              onPressed: () { setState(() {
+                                app_data.weekdays.removeAt(index);
+                              });},
+                              icon: Icon(Icons.delete),
+                            ),
+                          ))
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+        Visibility(
+            visible: new_routine_visible,
+            child: Container(
+              child: Column(
                 children: [
+                  TextField(),
                   ElevatedButton(
                       onPressed: () {
-                        print("Workout started");
+                        print("Clicked on added");
                         setState(() {
-                          print(app_data.weekdays[0].exercises);
+                          new_routine_visible = false;
                         });
                       },
-                      child: Text(
-                        "Start Routine",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      style: ButtonStyle(
-                          backgroundColor:
-                              WidgetStateProperty.all<Color>(Colors.green))),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Total routine-time: "),
-                      Text("${app_data.total_estimated_time} Hours"),
-                    ],
-                  )
+                      child: Text("Add new Routine"))
                 ],
-              )),
-          Expanded(
-            flex: 6,
-            child: ListView.builder(
-              itemCount: app_data.weekdays.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    print("CLICKED ON WORKOUT");
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => workout(index, app_data)));
-                  },
-                  child: Container(
-                    height: 100,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(9),
-                      border: Border.all(width: 0.5),
-                    ),
-                    margin: const EdgeInsets.symmetric(vertical: 2),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          margin: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
-                          child: Column(
-                            children: [
-                              Text(
-                                "${index + 1}.${app_data.weekdays[index].name} 's workout",
-                                style: TextStyle(
-                                    fontSize: 15, fontWeight: FontWeight.w800),
-                              ),
-                              Text(
-                                  "${app_data.weekdays[index].stratergy_name}"),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.fromLTRB(0, 0, 15, 0),
-                          child: Text(
-                              "Average Time: \n${app_data.weekdays[index].workout_time} Hrs"),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+              ),
+            ))
+      ]),
     );
   }
 }
