@@ -183,7 +183,7 @@ class start_workout_screen extends State<StatefulWidget> {
                                                 "" &&
                                             weight_controller.text.toString() !=
                                                 "") {
-                                          data.weekdays[week_day].exercises[exercise_index].Sets.add(Sets(
+                                          data.weekdays[week_day].exercises[exercise_index].Sets.add(Sets_ins(
                                               int.parse(
                                                   reps_controller.text.toString()),
                                               int.parse(weight_controller.text
