@@ -48,7 +48,7 @@ class cooldown_screen extends State<StatefulWidget>{
                          just_pass_data,
                          just_pass_weekday,
                          i)));
-      // if(i!=0) { Navigator.push(context, MaterialPageRoute(builder :(context)=>rest()));}
+      if(i!=0) { Navigator.push(context, MaterialPageRoute(builder :(context)=>rest()));}
 
        }
 

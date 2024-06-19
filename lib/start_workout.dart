@@ -220,7 +220,7 @@ class start_workout_screen extends State<StatefulWidget> {
                                           onTap: () {
                                             print("Pressed Previous");
                                             if (exercise_index - 1 >= 0) {
-                                              // Navigator.push(context, MaterialPageRoute(builder :(context)=>rest()));
+                                              Navigator.push(context, MaterialPageRoute(builder :(context)=>rest()));
 
                                               Navigator.push(
                                                   context,

@@ -10,6 +10,12 @@ import 'main.dart'; // Adjust import if needed
 Future<String> readDataFromDatabase() async {
   DatabaseHelper helper = DatabaseHelper();
   List<Map<String, dynamic>> items = await helper.fetchItems();
+
+  if (items.length == 0) {
+    helper.insertItem(
+        '{"total_estimated_time":0,"weekdays":[{"name":"Monday","stratergy_name":"MI","exercises":[{"name":"Bench-Press","Sets":[{"reps":16,"max":50},{"reps":8,"max":200}],"max_value_of_exersice":200,"max_value_of_reps":16,"last_time_sets":2},{"name":"Shoulder-press","Sets":[{"reps":16,"max":50},{"reps":8,"max":102}],"max_value_of_exersice":102,"max_value_of_reps":16,"last_time_sets":2},{"name":"Lats PullDown","Sets":[{"reps":12,"max":54},{"reps":6,"max":120}],"max_value_of_exersice":120,"max_value_of_reps":12,"last_time_sets":2}],"workout_time":3}],"workout_routines":["STRENGTH","STAMINA","ENDURANCE","BOXING","TIMEPASS"]}');
+    items = await helper.fetchItems();
+  }
   String jsonString = items[0]['value'];
   return jsonString;
 }
@@ -35,7 +41,6 @@ class _SplashScreenState extends State<Splash> {
   void initState() {
     super.initState();
 
-
     _dataFuture = fetchAllData();
 
     _dataFuture!.then((data) {
@@ -54,7 +59,6 @@ class _SplashScreenState extends State<Splash> {
         appBar: AppBar(
           title: Text('Splash Screen'),
         ),
-        body: Center(child: CircularProgressIndicator())
-    );
+        body: Center(child: CircularProgressIndicator()));
   }
 }

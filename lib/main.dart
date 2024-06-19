@@ -101,9 +101,7 @@ _MyHomePageState(this.app_data);
       ),
       body: Stack(children: [
         Column(
-          children: [ElevatedButton(onPressed: () async{
-
-            }, child: Text("zs")),
+          children: [
             Expanded(
               flex: 2,
               child: Row(
@@ -153,7 +151,7 @@ _MyHomePageState(this.app_data);
                                 child: Text(
                                   "${app_data.workout_routines[index]}",
                                   style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w800,
                                   ),
                                 ),
