@@ -39,4 +39,22 @@ class DatabaseHelper {
     Database db = await database;
     return await db.query('my_table');
   }
+
+  Future<int> updateFirstItem(String newValue) async {
+    Database db = await database;
+    // Get the id of the first row (assuming id starts from 1)
+    List<Map<String, dynamic>> result = await db.query('my_table', limit: 1);
+    int idToUpdate = result.isNotEmpty ? result[0]['id'] : -1;
+
+    if (idToUpdate != -1) {
+      return await db.update(
+        'my_table',
+        {'value': newValue},
+        where: 'id = ?',
+        whereArgs: [idToUpdate],
+      );
+    } else {
+      throw Exception('No rows found in the table.');
+    }
+  }
 }

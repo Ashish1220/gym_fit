@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:untitled/cooldown_workout_start.dart';
 import 'package:untitled/main.dart';
 import 'progress.dart';
+import 'data_heirarcy.dart';
 
 class workout extends StatefulWidget {
   var day_workout;
@@ -103,11 +104,14 @@ class workout_screen extends State<StatefulWidget> {
                         children: [
                           ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            cooldown(data, day_workout)));
+                                setState(() {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              cooldown(data, day_workout)));
+                                });
+
                               },
                               child: Text("Start Workout Now!")),
                           ElevatedButton(
