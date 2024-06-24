@@ -19,6 +19,7 @@ import 'add_new_routine.dart';
 import 'database_connector.dart';
 import 'data_heirarcy.dart';
 import 'splash_screen.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: 'GYM FIT',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurpleAccent),
         useMaterial3: true,
       ),
       // home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -42,15 +43,12 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-
-
-   String title;
-   var app_data;
-MyHomePage(this.title,this.app_data);
+  String title;
+  var app_data;
+  MyHomePage(this.title, this.app_data);
   @override
   State<MyHomePage> createState() => _MyHomePageState(app_data);
 }
-
 
 class _MyHomePageState extends State<MyHomePage> {
   // var app_data = data([
@@ -71,10 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
   //   "TIMEPASS"
   // ]
   // );
-
+  var remove_data;
   var app_data;
   var new_routine_visible = false;
-_MyHomePageState(this.app_data);
+  _MyHomePageState(this.app_data);
   get_new_routine() async {
     await Navigator.push(context,
         MaterialPageRoute(builder: (context) => add_new_routine(app_data)));
@@ -87,17 +85,17 @@ _MyHomePageState(this.app_data);
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Container(
-          width: 411,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Gym-Fit",
-                  style: TextStyle(fontSize: 25, fontStyle: FontStyle.italic)),
-              Container(
-                  height: 50, child: Image.asset('assets/images/logo.png')),
-            ],
-          ),
-        ),
+            width: 411,
+            child: Center(
+                child: Text(
+              "GYM FIT",
+              style: TextStyle(
+                  fontWeight: FontWeight.w800,
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'title_font'),
+            ))),
       ),
       body: Stack(children: [
         Column(
@@ -141,7 +139,9 @@ _MyHomePageState(this.app_data);
                               margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
                               width: 180,
                               decoration: BoxDecoration(
-                                color: Colors.orange,
+                                color: Colors.purple.shade50,
+                                border: Border.all(
+                                    width: 2, color: Colors.deepPurpleAccent),
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(12),
                                   bottomRight: Radius.circular(12),
@@ -168,20 +168,23 @@ _MyHomePageState(this.app_data);
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
-                        onPressed: () {
-                          print("Workout started");
-                          setState(() {
-                            get_new_routine();
-                          });
-                        },
-                        child: Text(
-                          "Add a new workout",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStateProperty.all<Color>(Colors.green))),
+                    SizedBox(
+                      height: 50,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            print("Workout started");
+                            setState(() {
+                              get_new_routine();
+                            });
+                          },
+                          child: Text(
+                            "ADD WORKOUT!",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          style: ButtonStyle(
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                  Colors.purple))),
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -202,9 +205,10 @@ _MyHomePageState(this.app_data);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => workout(index, app_data))).then((_){
+                              builder: (context) =>
+                                  workout(index, app_data))).then((_) {
                         DatabaseHelper helper2 = DatabaseHelper();
-                         helper2.updateFirstItem(app_data.toJsonString());
+                        helper2.updateFirstItem(app_data.toJsonString());
                       });
                     },
                     child: Container(
@@ -252,7 +256,8 @@ _MyHomePageState(this.app_data);
                             child: IconButton(
                               onPressed: () {
                                 setState(() {
-                                  app_data.weekdays.removeAt(index);
+                                  remove_data = index;
+                                  new_routine_visible = true;
                                 });
                               },
                               icon: Icon(Icons.delete),
@@ -269,19 +274,60 @@ _MyHomePageState(this.app_data);
         ),
         Visibility(
             visible: new_routine_visible,
-            child: Container(
-              child: Column(
-                children: [
-                  TextField(),
-                  ElevatedButton(
-                      onPressed: () {
-                        print("Clicked on added");
-                        setState(() {
-                          new_routine_visible = false;
-                        });
-                      },
-                      child: Text("Add new Routine"))
-                ],
+            child: Center(
+              child: Container(
+                width: 400,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(width: 2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: EdgeInsets.all(10),
+                height: 250,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      child: Icon(
+                        Icons.question_mark,
+                        size: 70,
+                      ),
+                    ),
+                    Container(
+                        margin: EdgeInsets.all(20),
+                        child:
+                            Text("Do You Really Want to remove this routine?",style: TextStyle(fontSize: 17),)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          width: 100,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                print("Clicked on added");
+                                setState(() {
+                                  new_routine_visible = false;
+                                });
+                              },
+                              child: Text("No")),
+                        ),
+                        Container(
+                          width: 100,
+                          child: ElevatedButton(
+                              onPressed: () {
+                                print("Clicked on added");
+                                setState(() {
+                                  app_data.weekdays.removeAt(remove_data);
+                                  remove_data = -1;
+                                  new_routine_visible = false;
+                                });
+                              },
+                              child: Text("Remove")),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ))
       ]),
