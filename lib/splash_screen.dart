@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:untitled/data_heirarcy.dart';
+import 'package:Gym_Fit/data_heirarcy.dart';
 import 'database_connector.dart';
 import 'data_heirarcy.dart'; // Ensure this import matches your actual file name
 import 'main.dart'; // Adjust import if needed
@@ -55,10 +55,6 @@ class _SplashScreenState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text('Splash Screen'),
-        ),
-        body: Center(child: CircularProgressIndicator()));
+    return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

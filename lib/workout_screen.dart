@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:untitled/cooldown_workout_start.dart';
-import 'package:untitled/main.dart';
+import 'package:Gym_Fit/cooldown_workout_start.dart';
+import 'package:Gym_Fit/main.dart';
 import 'progress.dart';
 import 'data_heirarcy.dart';
 

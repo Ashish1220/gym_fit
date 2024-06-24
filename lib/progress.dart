@@ -118,12 +118,18 @@ class progress_screen extends State<StatefulWidget> {
                       Text("Data Points"),
                       SingleChildScrollView(
                           child: Container(
-                            // color: Colors.brown,
+                        // color: Colors.brown,
                         width: double.infinity,
-                        height: 360,
-                        child: ListView.builder(itemCount: data.weekdays[weekday].exercises[exercise].Sets.length,itemBuilder: (context,index){
-                          return Container(child: Center(child: Text( "${index+1}. ${data.weekdays[weekday].exercises[exercise].Sets[index].max.toString()} kg"))) ;
-                        }),
+                        height: 248,
+                        child: ListView.builder(
+                            itemCount: data.weekdays[weekday]
+                                .exercises[exercise].Sets.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  child: Center(
+                                      child: Text(
+                                          "${index + 1}. ${data.weekdays[weekday].exercises[exercise].Sets[index].max.toString()} kg")));
+                            }),
                       ))
                     ],
                   )
@@ -168,82 +174,91 @@ class progress_screen extends State<StatefulWidget> {
                       Text("Data Points"),
                       SingleChildScrollView(
                           child: Container(
-                            // color: Colors.brown,
-                            width: double.infinity,
-                            height: 360,
-                            child: ListView.builder(itemCount: data.weekdays[weekday].exercises[exercise].Sets.length,itemBuilder: (context,index){
-                              return Container(child: Center(child: Text( "${index+1}. ${data.weekdays[weekday].exercises[exercise].Sets[index].reps.toString()} reps"))) ;
+                        // color: Colors.brown,
+                        width: double.infinity,
+                        height: 248,
+                        child: ListView.builder(
+                            itemCount: data.weekdays[weekday]
+                                .exercises[exercise].Sets.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  child: Center(
+                                      child: Text(
+                                          "${index + 1}. ${data.weekdays[weekday].exercises[exercise].Sets[index].reps.toString()} reps")));
                             }),
-                          ))
+                      ))
                     ],
                   )
-
                 ],
               ),
             ),
             Container(
-              height: 700,
-              width: 390,
+              height: 600,
+              width: 413,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Visibility(
-                      visible: options,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.green,
-                            borderRadius: BorderRadius.circular(10)),
-                        margin: EdgeInsets.all(5),
-                        width: 150,
-                        height: 100,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    reps_visible = false;
-                                    lift_visible = true;
-                                  });
-                                },
-                                child: Container(
-                                    // color: Colors.lightGreen,
-                                    padding: EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        top: 10,
-                                        bottom: 10),
-                                    child: Text("Lift Anaysis",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 17))),
+                    AnimatedContainer(
+                      duration: Duration(seconds: 1),
+                      child: Visibility(
+                        visible: options,
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.purple,
+                            borderRadius: BorderRadius.circular(7)
                               ),
-                              Container(
-                                  height: 1,
-                                  decoration: BoxDecoration(
-                                      border: Border(bottom: BorderSide()))),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    reps_visible = true;
-                                    lift_visible = false;
-                                  });
-                                },
-                                child: Container(
-                                    padding: EdgeInsets.only(
-                                        left: 25,
-                                        right: 25,
-                                        top: 13,
-                                        bottom: 10),
-                                    // color: Colors.lightGreen,
-                                    child: Text("Rep Analysis",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 17))),
-                              )
-                            ]),
+                          margin: EdgeInsets.only(bottom: 3,right: 5),
+                          width: 150,
+                          height: 100,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      reps_visible = false;
+                                      lift_visible = true;
+                                    });
+                                  },
+                                  child: Container(
+                                      // color: Colors.lightGreen,
+                                      padding: EdgeInsets.only(
+                                          left: 25,
+                                          right: 25,
+                                          top: 10,
+                                          bottom: 10),
+                                      child: Text("Lift Anaysis",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17))),
+                                ),
+                                Container(
+                                    height: 1,
+                                    decoration: BoxDecoration(
+                                        border: Border(bottom: BorderSide()))),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      reps_visible = true;
+                                      lift_visible = false;
+                                    });
+                                  },
+                                  child: Container(
+                                      padding: EdgeInsets.only(
+                                          left: 25,
+                                          right: 25,
+                                          top: 13,
+                                          bottom: 10),
+                                      // color: Colors.lightGreen,
+                                      child: Text("Rep Analysis",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 17))),
+                                )
+                              ]),
+                        ),
                       ),
                     ),
                     InkWell(
@@ -258,10 +273,10 @@ class progress_screen extends State<StatefulWidget> {
                       },
                       child: Container(
                         width: 80,
-                        height: 80,
+                        height: 120,
                         decoration: BoxDecoration(
-                            color: Colors.lightGreen,
-                            borderRadius: BorderRadius.circular(100)),
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.only(bottomLeft:Radius.circular(100),topLeft:Radius.circular(100))),
                         child: Center(child: Icon(Icons.list)),
                       ),
                     ),

@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:untitled/progress.dart';
-import 'package:untitled/rest.dart';
+import 'package:Gym_Fit/progress.dart';
+import 'package:Gym_Fit/rest.dart';
 import 'workout_screen.dart';
 import 'start_workout.dart';
 import 'cooldown_workout_start.dart';
@@ -232,13 +232,13 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: Column(
                                 children: [
                                   Text(
-                                    "${index + 1}.${app_data.weekdays[index].name} 's workout",
+                                    "${index + 1}.${app_data.weekdays[index].name} ",
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.w800),
                                   ),
                                   Text(
-                                      "${app_data.weekdays[index].stratergy_name}"),
+                                      "${app_data.weekdays[index].stratergy_name} day" ),
                                 ],
                               ),
                             ),

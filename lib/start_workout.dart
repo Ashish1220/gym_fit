@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/main.dart';
-import 'package:untitled/workout_screen.dart';
+import 'package:Gym_Fit/main.dart';
+import 'package:Gym_Fit/workout_screen.dart';
 import 'rest.dart';
 import 'data_heirarcy.dart';
 

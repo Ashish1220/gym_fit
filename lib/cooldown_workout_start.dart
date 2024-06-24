@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'package:untitled/start_workout.dart';
+import 'package:Gym_Fit/start_workout.dart';
 import 'rest.dart';
 import 'main.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:untitled/workout_screen.dart';
+import 'package:Gym_Fit/workout_screen.dart';
 
 class cooldown extends StatefulWidget{
   var just_pass_data;
