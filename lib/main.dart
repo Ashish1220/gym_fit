@@ -175,6 +175,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             print("Workout started");
                             setState(() {
                               get_new_routine();
+                              DatabaseHelper helper2 = DatabaseHelper();
+                              helper2.updateFirstItem(app_data.toJsonString());
                             });
                           },
                           child: Text(
@@ -307,6 +309,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 print("Clicked on added");
                                 setState(() {
                                   new_routine_visible = false;
+
                                 });
                               },
                               child: Text("No")),
@@ -320,6 +323,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   app_data.weekdays.removeAt(remove_data);
                                   remove_data = -1;
                                   new_routine_visible = false;
+                                  DatabaseHelper helper2 = DatabaseHelper();
+                                  helper2.updateFirstItem(app_data.toJsonString());
                                 });
                               },
                               child: Text("Remove")),

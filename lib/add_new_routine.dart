@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:untitled/main.dart';
 import 'main.dart';
 import 'data_heirarcy.dart';
@@ -15,6 +16,7 @@ class add_new_routine extends StatefulWidget {
 }
 
 class add_new_routine_screen extends State<StatefulWidget> {
+  var temp_opacity=0.8;
   var data;
   var warning="";
   var add_routine_name_controller = TextEditingController();
@@ -40,14 +42,17 @@ class add_new_routine_screen extends State<StatefulWidget> {
           ),
         ),
       ),
-      body: Container(
-        color: Colors.green.shade50,
+      body: AnimatedContainer(
+
+        decoration: BoxDecoration(color: Colors.purple.shade50,image: DecorationImage(image: AssetImage("assets/images/back_ground.png"),fit: BoxFit.fitHeight)),
+        duration: Duration(seconds: 2),
         child: Center(
-            child: Container(
+            child: AnimatedContainer(
+              duration: Duration(seconds: 1),
           width: 300,
           height: 400,
           decoration: BoxDecoration(
-              color: Colors.green, borderRadius: BorderRadius.circular(12)),
+              color: Colors.deepPurpleAccent.withOpacity(temp_opacity), borderRadius: BorderRadius.circular(12)),
           child: Column(
             children: [
               Expanded(
@@ -69,8 +74,14 @@ class add_new_routine_screen extends State<StatefulWidget> {
                         margin: EdgeInsets.all(13),
                         width: 200,
                         child: TextField(
+                          onTap: (){
+                            setState(() {
+                              temp_opacity=1;
+                            });
+                          },
                           controller: add_routine_name_controller,
                           decoration:const  InputDecoration(
+
                               hintText: "Routine Name",
                               prefixIcon: Icon(Icons.sports_gymnastics)),
                         )),
@@ -78,8 +89,15 @@ class add_new_routine_screen extends State<StatefulWidget> {
                         margin: EdgeInsets.all(13),
                         width: 200,
                         child: TextField(
+                          onTap: (){
+                            setState(() {
+                              temp_opacity=1;
+                            });
+                          },
+
                           controller: add_strategy_name_controller,
                           decoration: const InputDecoration(
+
                               hintText: "Strategy Name",
                               prefixIcon: Icon(Icons.sports_gymnastics)),
                         )),Container(height: 16,child: Text(warning,style: TextStyle(color: Colors.red),)),
