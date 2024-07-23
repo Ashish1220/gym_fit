@@ -27,5 +27,6 @@ A dynamic Flutter application designed to track your workouts and predict future
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Ashish1220/Gym-fit.git
+   git clone https://github.com/Ashish1220/gym_fit.git ```
+
 
