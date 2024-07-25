@@ -1,4 +1,4 @@
-#GYM-FIT
+# GYM-FIT
 
 ![Flutter Version](https://img.shields.io/badge/flutter-v2.5.0-blue.svg)
 ![Dart Version](https://img.shields.io/badge/dart-v2.14.0-blue.svg)
@@ -25,7 +25,7 @@ A dynamic Flutter application designed to track your workouts and predict future
 
 ## Installation
 
-1. Clone the repository:
+1. Clone the repository (Make sure to clone master branch):
    ```bash
    git clone https://github.com/Ashish1220/gym_fit.git
    ```
